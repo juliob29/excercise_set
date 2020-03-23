@@ -19,9 +19,10 @@ def exercise_set(speed_time, rest_time, last_set):
 
 def speed(sets):
     print("WELCOME! This will do the normal speed workout from practice. This will be done", sets, "time(s)!")
-    input("To start, press any key!")
+    
     
     for _ in range(sets):
+        input("To start this set, press any key!")
         print("NEW SET, STARTING NOW!")
         #speed, then rest
         speed_time = 15
@@ -38,13 +39,19 @@ def speed(sets):
         
         # Decreasing section
         for j in range(4):
-            # Here, we decrease first so that we don't have to do 90 again. 
+            # Here, we decrease first so that we don't have to do the high interval again. 
             speed_time -= 15
             rest_time -= 15
+
+            # Handle the logic for the final set (no rest on final)
             if j != 3:
                 exercise_set(speed_time, rest_time, False)
             else:
                 exercise_set(speed_time, rest_time, True)
+        
+        play_ding()
+        print("Set complete!")
+    
             
 def main():
     sets = ""
