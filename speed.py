@@ -5,16 +5,17 @@ def play_ding():
     wave_obj = sa.WaveObject.from_wave_file("ding.wav")
     wave_obj.play()
 
-def exercise_set(speed_time, rest_time):
+# If this is the last_set, we do not do rest.
+def exercise_set(speed_time, rest_time, last_set):
     play_ding()
     
     print(speed_time, " SECOND SET, STARTING NOW!")
     time.sleep(speed_time)
     
     play_ding()
-    
-    print("OK ", rest_time, " SECOND REST STARTING NOW!")
-    time.sleep(rest_time)
+    if not last_set:
+        print("OK ", rest_time, " SECOND REST STARTING NOW!")
+        time.sleep(rest_time)
 
 def speed(sets):
     print("WELCOME! This will do the normal speed workout from practice. This will be done", sets, "time(s)!")
@@ -28,7 +29,7 @@ def speed(sets):
         
         # Increasing section
         for i in range(5):
-            exercise_set(speed_time, rest_time) 
+            exercise_set(speed_time, rest_time, False) 
             
             # Do not increase if on last round. 
             if i != 4:
@@ -36,11 +37,14 @@ def speed(sets):
                 rest_time += 15
         
         # Decreasing section
-        for j in range(5):
+        for j in range(4):
             # Here, we decrease first so that we don't have to do 90 again. 
             speed_time -= 15
             rest_time -= 15
-            exercise_set(speed_time, rest_time)
+            if j != 3:
+                exercise_set(speed_time, rest_time, False)
+            else:
+                exercise_set(speed_time, rest_time, True)
             
 def main():
     sets = ""
